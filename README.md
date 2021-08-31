@@ -7,7 +7,7 @@ The interface was developed with Qt and pyqt5. Developed with user-friendly and 
  - Baud rate selection 
  - Pwm frequency control 
  - Pulse width control(sn or ms)
- - Duty cycle control(Percent)
+ - Duty cycle control(Percent)<br/>
 <img align="center" src="https://user-images.githubusercontent.com/62069736/131516151-5cfb2f01-3823-4955-82db-d35ca1e82822.png" /><br/>
 
 ### Stm32F100RB
