@@ -8,7 +8,7 @@ The interface was developed with Qt and pyqt5. Developed with user-friendly and 
  - Pwm frequency control 
  - Pulse width control(sn or ms)
  - Duty cycle control(Percent)
-<img align="left" src="https://user-images.githubusercontent.com/62069736/131516151-5cfb2f01-3823-4955-82db-d35ca1e82822.png" />
+<img align="center" src="https://user-images.githubusercontent.com/62069736/131516151-5cfb2f01-3823-4955-82db-d35ca1e82822.png" /><br/>
 
 ### Stm32F100RB
 Communication with the interface was carried out with uart. Data loss is prevented in serial communication with Uart dma. PWM is produced by TIM2. Its initial value is 1 kHz. There are address bytes for classification of incoming data.<br/> 
