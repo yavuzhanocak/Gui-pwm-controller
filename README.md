@@ -10,3 +10,7 @@ The interface was developed with Qt and pyqt5. Developed with user-friendly and 
  - Duty cycle control(Percent)
 
 ![image](https://user-images.githubusercontent.com/62069736/131516151-5cfb2f01-3823-4955-82db-d35ca1e82822.png)
+### Stm32F100RB
+Communication with the interface was carried out with uart. Data loss is prevented in serial communication with Uart dma. PWM is produced by TIM2. Its initial value is 1 kHz. There are address bytes for classification of incoming data.<br/> 
+![VID_20210813_174932](https://user-images.githubusercontent.com/62069736/131518208-54c1a644-11c5-4656-899d-9c40b728ee75.gif)
+
