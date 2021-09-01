@@ -69,7 +69,7 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-  void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+  void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) //Uart dma kesmesi ve bufferların sıfırlanması işlemi.
 {
 		if(huart->Instance==USART1){
 				memcpy(MainBuf,RxBuf,Size);
@@ -127,23 +127,23 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-			sscanf(RxBuf,"%lf",&RxData);
-		if(RxBuf[buf_size]=='d'){
+			sscanf(RxBuf,"%lf",&RxData); //Gelen datayı floata çevirme işlemi
+		if(RxBuf[buf_size]=='d'){        //Gelen data duty cycle ise işleme sokma
 	    	TIM2->CCR1=(arrFreq*RxData/100);
-			  RxBuf[buf_size]=0x00;
+			  RxBuf[buf_size]=0x00;     //Buffer sıfırlama
 		}
-		else if(RxBuf[buf_size]=='s'){
-				 dt=RxData*0.000001;
+		else if(RxBuf[buf_size]=='s'){  //Gelen data second ise işleme sokma
+				 dt=RxData*0.000001;    //Microsaniyeden saniyeye çevrim
 				 percent=(dt/ft)*100;
 				 TIM2->CCR1=(arrFreq*percent/100);
-			   RxBuf[buf_size]=0x00;
+			   RxBuf[buf_size]=0x00;    //Buffer sıfırlama
 		
 		}
-	  else if(RxBuf[buf_size]=='f'){
-			ft=(1/(RxData));	// 1/frekans
+	  else if(RxBuf[buf_size]=='f'){    //Gelen data frekans ise işleme sokma
+			ft=(1/(RxData));
 		  arrFreq=(24000000/RxData)-1;
 			TIM2->ARR=arrFreq;
-			RxBuf[buf_size]=0x00;
+			RxBuf[buf_size]=0x00;        //Buffer sıfırlama
 			}
 			
   }
