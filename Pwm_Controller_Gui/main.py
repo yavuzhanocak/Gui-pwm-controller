@@ -15,7 +15,7 @@ class ders_2(QMainWindow):
         self.connectUi()
         self.setStart()
 
-    def setStart(self):
+    def setStart(self): #Başlangıç durum atamaları.
         self.setWindowIcon(QIcon("icons/icon1.png"))
         self.ui.buttonDisconnect.setEnabled(False)
         self.ui.buttonSend.setEnabled(False)
