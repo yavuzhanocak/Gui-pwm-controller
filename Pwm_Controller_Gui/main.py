@@ -30,9 +30,9 @@ class ders_2(QMainWindow):
         self.ui.lineFrequency.setValidator(self.onlyInt)
         self.ui.lineDutycycle.setValidator(self.onlyInt)
 
-    def radioButton(self):
+    def radioButton(self):#Radio button kontrolü
         if self.ui.second.isChecked()==True:
-            self.ui.label_2.setText("Pulse Width")
+            self.ui.label_2.setText("PulseWidth")
             self.ui.lineDutycycle.clear()
             self.ui.labelPercent.setHidden(True)
             self.ui.comboSecond.setHidden(False)
@@ -42,37 +42,33 @@ class ders_2(QMainWindow):
             self.ui.lineDutycycle.clear()
             self.ui.labelPercent.setHidden(False)
 
-
     def serial(self): #Seri portların çekilmesi.
         for serialPort in QSerialPortInfo.availablePorts():
             self.ui.comboComport.addItem((serialPort.portName()))
 
-    def init(self):
+    def init(self): #serialport isimlendirme
         self.serialPort=QSerialPort()
 
-    def portSenddata(self):
+    def portSenddata(self): #Veri gönderme
         if self.ui.lineFrequency.text()=="" or self.ui.lineDutycycle.text()=="":
             QMessageBox.about(self, "Error", "Please check the values!")
-
         else:
             self.freqData=self.ui.lineFrequency.text()+'f'
             self.serialPort.write(self.freqData.encode())
-            QTimer.singleShot(500,self.sendDutycycle)
+            QTimer.singleShot(500,self.sendDutycycle) #2 veri arasında timer kurma
 
-
-
-    def sendDutycycle(self):
-        text = str(self.ui.comboSecond.currentText())
-        if text == "ms" and self.ui.second.isChecked() == True:
+    def sendDutycycle(self): #veri gönderim devamı
+        comboSecondText = str(self.ui.comboSecond.currentText())
+        if comboSecondText == "ms" and self.ui.second.isChecked() == True: #ms tercih edilrise
             secData=float(self.ui.lineDutycycle.text())*1000
             self.dutyData=str(secData)+'s'
-        elif text == "µs" and self.ui.second.isChecked() == True:
+        elif comboSecondText == "µs" and self.ui.second.isChecked() == True:   #µs tercih edilirse
             self.dutyData = self.ui.lineDutycycle.text() + 's'
         else:
-            self.dutyData = self.ui.lineDutycycle.text() + 'd'
+            self.dutyData = self.ui.lineDutycycle.text() + 'd'  #yüzdelik tercih edilirse
         self.serialPort.write( self.dutyData.encode())
-    def portConnect(self):
 
+    def portConnect(self): #serialport konfigürasyon
         self.serialPort.setPortName(self.ui.comboComport.currentText())
         self.serialPort.setBaudRate(int(self.ui.comboBoudrate.currentText()))
         self.serialPort.setDataBits(QSerialPort.Data8)
@@ -88,7 +84,8 @@ class ders_2(QMainWindow):
             self.ui.lineFrequency.setEnabled(True)
             self.ui.lineDutycycle.setEnabled(True)
             self.ui.comboSecond.setEnabled(True)
-    def portDisconnect(self):
+
+    def portDisconnect(self): #serial port bağlantı kesme
         if self.serialPort.isOpen():
             self.serialPort.close()
             self.ui.buttonConnect.setEnabled(True)
@@ -101,7 +98,8 @@ class ders_2(QMainWindow):
             self.ui.lineFrequency.clear()
             self.ui.lineDutycycle .clear()
             self.ui.comboSecond.setEnabled(False)
-    def connectUi(self):
+
+    def connectUi(self): #Button kontrol
         self.ui.buttonConnect.clicked.connect(self.portConnect)
         self.ui.buttonDisconnect.clicked.connect(self.portDisconnect)
         self.ui.buttonSend.clicked.connect(self.portSenddata)
